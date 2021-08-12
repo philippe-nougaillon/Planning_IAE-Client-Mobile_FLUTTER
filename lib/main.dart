@@ -71,7 +71,7 @@ class MyHomePage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final Map<String, dynamic> item =
                       _coursProvider.lesCours[index];
-                  final _matiereJson = item["matiere_json"] ?? 'test';
+                  final _matiereJson = item["matiere_json"] ?? '';
                   return CoursWidget(item: item, matiereJson: _matiereJson);
                 }),
       ),
