@@ -24,12 +24,12 @@ class MyApp extends StatelessWidget {
         create: (_) => CoursProvider(),
         child: const MyHomePage(title: 'Planning'),
       ),
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
-        const Locale('fr', 'FR'),
+      supportedLocales: const [
+        Locale('fr', 'FR'),
       ],
     );
   }

@@ -36,7 +36,8 @@ class CoursWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(item["debut_fin_json_v2"].substring(0, 5),
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
                           Text(item["debut_fin_json_v2"].substring(5)),
                           Expanded(
                             child: Align(
@@ -59,11 +60,12 @@ class CoursWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(item["formation_json_v2"],
-                            style: TextStyle(fontWeight: FontWeight.bold)),
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
                       ),
                       Text(item["intervenant_json"]),
                       Text(_matiereJson,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.w100,
                               fontStyle: FontStyle.italic,
                               fontSize: 14)),
