@@ -145,5 +145,5 @@ class DetailsPage extends StatelessWidget {
 }
 
 String nomDuPlanAvecSalle(String salle) {
-  return 'images/Plan_' + salle + '.jpg';
+  return 'assets/images/Plan_' + salle + '.jpg';
 }
