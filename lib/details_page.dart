@@ -15,7 +15,7 @@ class DetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(item["formation_json_v2"]),
       ),
-      body: Center(
+      body: SafeArea(
         child: Card(
           child: Column(
             children: [
