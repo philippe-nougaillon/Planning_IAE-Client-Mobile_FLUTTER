@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'hexcolor.dart';
+import 'details_page.dart';
 
 class CoursWidget extends StatelessWidget {
   const CoursWidget({
@@ -81,16 +82,5 @@ class CoursWidget extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-class DetailsPage extends StatelessWidget {
-  DetailsPage(this.item);
-
-  final Map<String, dynamic> item;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(item["formation_json_v2"]);
   }
 }
