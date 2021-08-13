@@ -110,6 +110,23 @@ String nomDuPlanAvecSalle(String salle) {
 }
 
 // Container(
+//   decoration: new BoxDecoration(color: Colors.white),
+//   height: 240,
+//   child: Stack(
+//     children: <Widget>[
+//       Image.asset(nomDuPlanAvecSalle(item["salle_json_v2"]),
+//           fit: BoxFit.fill),
+//       Positioned(
+//         bottom: 15,
+//         right:
+//             15, //give the values according to your requirement
+//         child: Icon(Icons.favorite),
+//       ),
+//     ],
+//   ),
+// ),
+
+// Container(
 //    decoration: new BoxDecoration(color: Colors.white),
 //    height: 240,
 //    child: Stack(
