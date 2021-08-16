@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'cours_provider.dart';
@@ -35,10 +36,23 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String _currentDate = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _currentDate = DateTime.now().toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +61,18 @@ class MyHomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text('Planning du ' + formatCurrentDateToFrench(_currentDate)),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.calendar_today_outlined),
               tooltip: 'Changer de date',
               onPressed: () {
-                _selectionDate(context)
-                    .then((value) => _coursProvider.chargerCoursDuJour(value));
+                _selectionDate(context).then((value) {
+                  setState(() {
+                    _currentDate = value;
+                  });
+                  _coursProvider.chargerCoursDuJour(value);
+                });
               },
             ),
           ],
@@ -76,6 +94,15 @@ class MyHomePage extends StatelessWidget {
                 }),
       ),
     );
+  }
+
+  // Formater la date à la française // 23/08/2021
+  String formatCurrentDateToFrench(String _date) {
+    String _dateFormatFR = "";
+    if (_date != "") {
+      _dateFormatFR = DateFormat('dd/MM/yyyy').format(DateTime.parse(_date));
+    }
+    return _dateFormatFR;
   }
 
   Future<String> _selectionDate(BuildContext context) async {
