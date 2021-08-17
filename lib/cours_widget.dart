@@ -74,7 +74,7 @@ class CoursWidget extends StatelessWidget {
             ],
           ),
         ),
-        onLongPress: () {
+        onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
