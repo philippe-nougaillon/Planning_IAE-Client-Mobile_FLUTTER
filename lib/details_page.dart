@@ -11,6 +11,7 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _matiereJson = item["matiere_json"] ?? '';
+    final _salle = item["salle_json_v2"];
 
     return Scaffold(
       appBar: AppBar(
@@ -51,7 +52,7 @@ class DetailsPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            item["salle_json_v2"],
+                            _salle,
                           ),
                         )
                       ]),
@@ -105,10 +106,8 @@ class DetailsPage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  child: _salleAvecPlan(item["salle_json_v2"])
-                      ? Image(
-                          image: AssetImage(
-                              nomDuPlanAvecSalle(item["salle_json_v2"])))
+                  child: _salleAvecPlan(_salle)
+                      ? Image(image: AssetImage(nomDuPlanAvecSalle(_salle)))
                       : Container(),
                 ),
                 Container(
