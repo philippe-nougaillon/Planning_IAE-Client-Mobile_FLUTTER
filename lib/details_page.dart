@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -11,6 +14,7 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _matiereJson = item["matiere_json"] ?? '';
+
     return Scaffold(
       appBar: AppBar(
         title: Text(item["formation_json_v2"]),
@@ -103,19 +107,18 @@ class DetailsPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Text("Emplacement sur la carte",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
                 Container(
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: Image.asset(nomDuPlanAvecSalle(item["salle_json_v2"]),
-                      fit: BoxFit.fill),
+                  child: _salleAvecPlan(item["salle_json_v2"])
+                      ? Image(
+                          image: AssetImage(
+                              nomDuPlanAvecSalle(item["salle_json_v2"])))
+                      : Container(),
                 ),
                 Container(
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: Image.asset('assets/images/Biopark.png',
-                      fit: BoxFit.fill),
-                ),
+                    decoration: const BoxDecoration(color: Colors.white),
+                    child: const Image(
+                        image: AssetImage('assets/images/Biopark.png'),
+                        fit: BoxFit.fill)),
               ],
             ),
           ),
@@ -125,6 +128,12 @@ class DetailsPage extends StatelessWidget {
   }
 }
 
-String nomDuPlanAvecSalle(String salle) {
-  return 'assets/images/Plan_' + salle + '.jpg';
+String nomDuPlanAvecSalle(String _salle) {
+  return 'assets/images/Plan_' + _salle + '.jpg';
+}
+
+bool _salleAvecPlan(String _salle) {
+  List<String> _plan = ['B1', 'B2', 'B3'];
+
+  return (_plan.contains(_salle));
 }
