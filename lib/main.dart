@@ -105,9 +105,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       )
                     : ListView.separated(
-                        separatorBuilder: (context, index) => const Divider(),
-                        itemCount: _coursProvider.lesCours.length,
+                        separatorBuilder: (context, index) => const Divider(
+                              color: Colors.grey,
+                            ),
                         controller: _scrollController,
+                        itemCount: _coursProvider.lesCours.length,
                         itemBuilder: (context, index) {
                           final Map<String, dynamic> item =
                               _coursProvider.lesCours[index];
@@ -155,6 +157,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (_dateChoisie != null) {
       _result = _dateChoisie.toString().substring(0, 10);
+    } else {
+      _result = DateTime.now().toString();
     }
     return (_result);
   }
