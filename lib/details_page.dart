@@ -28,13 +28,24 @@ class DetailsPage extends StatelessWidget {
                     border: TableBorder.all(
                       color: HexColor.fromHex(item["formation_color_json_v2"]),
                     ),
-                    columnWidths: const {0: FractionColumnWidth(.3)},
+                    columnWidths: const {0: FractionColumnWidth(.2)},
                     children: [
                       TableRow(children: [
                         const Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text("Horaire",
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          child: Text("Date"),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(item["date_json_v3"],
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                        ),
+                      ]),
+                      TableRow(children: [
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text("Horaire"),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -46,42 +57,30 @@ class DetailsPage extends StatelessWidget {
                       TableRow(children: [
                         const Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text("Salle",
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            _salle,
-                          ),
-                        )
-                      ]),
-                      TableRow(children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text("Formation",
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          child: Text("Formation"),
                         ),
                         Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(item["formation_json_v2"]))
+                            child: Text(item["formation_json_v2"],
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold)))
                       ]),
                       TableRow(children: [
                         const Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text("Intervenant",
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          child: Text("Intervenant"),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(item["intervenant_json"]),
+                          child: Text(item["intervenant_json"],
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ]),
                       TableRow(children: [
                         const Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text("Intitulé",
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          child: Text("Intitulé cours"),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -91,15 +90,27 @@ class DetailsPage extends StatelessWidget {
                                   fontStyle: FontStyle.italic)),
                         )
                       ]),
+                      TableRow(children: [
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text("Salle"),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(_salle,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                        )
+                      ]),
                       const TableRow(children: [
                         Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text("Nbr Places",
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          child: Text("Nbr Places"),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text("un certain nombre"),
+                          child: Text("un certain nombre",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ]),
                     ],

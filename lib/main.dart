@@ -48,6 +48,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String _currentDate = "";
   bool _planningLoaded = false;
+  int _currentPage = 1;
 
   @override
   void initState() {
@@ -58,9 +59,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final _coursProvider = Provider.of<CoursProvider>(context);
+    ScrollController _scrollController = ScrollController();
 
     if (!_planningLoaded) {
-      _coursProvider.chargerCoursDuJour(_currentDate);
+      _coursProvider.chargerCoursDuJour(_currentDate, _currentPage);
       setState(() {
         _planningLoaded = true;
       });
@@ -69,7 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Planning du ' + formatCurrentDateToFrench(_currentDate)),
+          title: Text('Planning à partir du ' +
+              formatCurrentDateToFrench(_currentDate)),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.calendar_today_outlined),
@@ -81,8 +84,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 _selectionDate(context).then((value) {
                   setState(() {
                     _currentDate = value;
+                    _currentPage = 1;
                   });
-                  _coursProvider.chargerCoursDuJour(value);
+                  _coursProvider.chargerCoursDuJour(value, _currentPage);
                   setState(() {
                     _planningLoaded = true;
                   });
@@ -102,12 +106,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       )
                     : ListView.builder(
                         itemCount: _coursProvider.lesCours.length,
+                        controller: _scrollController,
                         itemBuilder: (context, index) {
                           final Map<String, dynamic> item =
                               _coursProvider.lesCours[index];
                           final _matiereJson = item["matiere_json"] ?? '';
-                          return CoursWidget(
-                              item: item, matiereJson: _matiereJson);
+                          return ((index + 1) < _coursProvider.lesCours.length)
+                              ? CoursWidget(
+                                  item: item, matiereJson: _matiereJson)
+                              : TextButton(
+                                  child: const Text("Afficher plus de cours...",
+                                      style: TextStyle(fontSize: 20)),
+                                  onPressed: () {
+                                    setState(() {
+                                      _currentPage++;
+                                    });
+                                    _coursProvider.chargerCoursDuJour(
+                                        _currentDate, _currentPage);
+                                    _scrollController.jumpTo(_scrollController
+                                        .position.minScrollExtent);
+                                  },
+                                );
                         }),
               )
             : const Center(child: CircularProgressIndicator(value: null)),
