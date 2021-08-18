@@ -4,11 +4,10 @@ import 'dart:convert';
 
 class CoursProvider with ChangeNotifier {
   List<dynamic> _lesCours = List<dynamic>.empty();
-  final String _host = 'https://planning4-testing.herokuapp.com/';
-  final String _query = 'api/v3/cours?d=';
 
+  final String _host = 'https://planning4-testing.herokuapp.com/';
   //final String _host = 'http://100.115.92.199:3000/';
-  //final String _query = 'api/v3/cours?d=';
+  final String _query = 'api/v3/cours?d=';
 
   CoursProvider();
 

@@ -104,7 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           style: TextStyle(fontSize: 20),
                         ),
                       )
-                    : ListView.builder(
+                    : ListView.separated(
+                        separatorBuilder: (context, index) => const Divider(),
                         itemCount: _coursProvider.lesCours.length,
                         controller: _scrollController,
                         itemBuilder: (context, index) {
