@@ -47,6 +47,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _currentDate = "";
+  bool _planningLoaded = false;
 
   @override
   void initState() {
@@ -58,6 +59,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final _coursProvider = Provider.of<CoursProvider>(context);
 
+    if (!_planningLoaded) {
+      _coursProvider.chargerCoursDuJour(_currentDate);
+      setState(() {
+        _planningLoaded = true;
+      });
+    }
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -67,31 +75,42 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: const Icon(Icons.calendar_today_outlined),
               tooltip: 'Changer de date',
               onPressed: () {
+                setState(() {
+                  _planningLoaded = false;
+                });
                 _selectionDate(context).then((value) {
                   setState(() {
                     _currentDate = value;
                   });
                   _coursProvider.chargerCoursDuJour(value);
+                  setState(() {
+                    _planningLoaded = true;
+                  });
                 });
               },
             ),
           ],
         ),
-        body: _coursProvider.lesCours.isEmpty
-            ? const Center(
-                child: Text(
-                  "Rien à afficher pour la date choisie...",
-                  style: TextStyle(fontSize: 20),
-                ),
+        body: _planningLoaded
+            ? Container(
+                child: _coursProvider.lesCours.isEmpty
+                    ? const Center(
+                        child: Text(
+                          "Rien à afficher pour la date choisie...",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: _coursProvider.lesCours.length,
+                        itemBuilder: (context, index) {
+                          final Map<String, dynamic> item =
+                              _coursProvider.lesCours[index];
+                          final _matiereJson = item["matiere_json"] ?? '';
+                          return CoursWidget(
+                              item: item, matiereJson: _matiereJson);
+                        }),
               )
-            : ListView.builder(
-                itemCount: _coursProvider.lesCours.length,
-                itemBuilder: (context, index) {
-                  final Map<String, dynamic> item =
-                      _coursProvider.lesCours[index];
-                  final _matiereJson = item["matiere_json"] ?? '';
-                  return CoursWidget(item: item, matiereJson: _matiereJson);
-                }),
+            : const Center(child: CircularProgressIndicator(value: null)),
       ),
     );
   }
