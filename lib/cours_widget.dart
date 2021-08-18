@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'hexcolor.dart';
 import 'details_page.dart';
@@ -36,10 +38,16 @@ class CoursWidget extends StatelessWidget {
                     children: [
                       Row(
                         children: [
+                          Text(
+                            item["date_json_v3"],
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const Text(' ('),
                           Text(item["debut_fin_json_v2"].substring(0, 5),
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold)),
                           Text(item["debut_fin_json_v2"].substring(5)),
+                          const Text(')'),
                           Expanded(
                             child: Align(
                                 alignment: Alignment.centerRight,

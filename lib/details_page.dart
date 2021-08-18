@@ -33,6 +33,18 @@ class DetailsPage extends StatelessWidget {
                       TableRow(children: [
                         const Padding(
                           padding: EdgeInsets.all(8.0),
+                          child: Text("Date"),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(item["date_json_v3"],
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                        ),
+                      ]),
+                      TableRow(children: [
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Text("Horaire"),
                         ),
                         Padding(
