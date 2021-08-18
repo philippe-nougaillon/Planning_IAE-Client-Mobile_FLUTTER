@@ -49,7 +49,7 @@ class CoursWidget extends StatelessWidget {
                         child: Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              item["salle_json_v2"],
+                              item["salle_json_v2"] ?? '',
                               style: TextStyle(
                                 fontSize: 16,
                                 foreground: Paint()

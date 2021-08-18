@@ -47,6 +47,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _currentDate = "";
+  String _searchText = "";
   bool _planningLoaded = false;
   int _currentPage = 1;
 
@@ -62,7 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
     ScrollController _scrollController = ScrollController();
 
     if (!_planningLoaded) {
-      _coursProvider.chargerCoursDuJour(_currentDate, _currentPage);
+      _coursProvider.chargerCoursDuJour(
+          _currentDate, _currentPage, _searchText);
       setState(() {
         _planningLoaded = true;
       });
@@ -85,14 +87,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   setState(() {
                     _currentDate = value;
                     _currentPage = 1;
+                    _searchText = "";
                   });
-                  _coursProvider.chargerCoursDuJour(value, _currentPage);
+                  _coursProvider.chargerCoursDuJour(
+                      value, _currentPage, _searchText);
                   setState(() {
                     _planningLoaded = true;
                   });
                 });
               },
             ),
+            IconButton(
+                onPressed: () => _displayTextInputDialog(context).then((value) {
+                      _coursProvider.chargerCoursDuJour(
+                          _currentDate, _currentPage, _searchText);
+                    }),
+                icon: const Icon(Icons.search))
           ],
         ),
         body: _planningLoaded
@@ -105,9 +115,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       )
                     : ListView.separated(
-                        separatorBuilder: (context, index) => const Divider(),
-                        itemCount: _coursProvider.lesCours.length,
+                        separatorBuilder: (context, index) => const Divider(
+                              color: Colors.grey,
+                            ),
                         controller: _scrollController,
+                        itemCount: _coursProvider.lesCours.length,
                         itemBuilder: (context, index) {
                           final Map<String, dynamic> item =
                               _coursProvider.lesCours[index];
@@ -123,7 +135,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                       _currentPage++;
                                     });
                                     _coursProvider.chargerCoursDuJour(
-                                        _currentDate, _currentPage);
+                                        _currentDate,
+                                        _currentPage,
+                                        _searchText);
                                     _scrollController.jumpTo(_scrollController
                                         .position.minScrollExtent);
                                   },
@@ -155,7 +169,48 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (_dateChoisie != null) {
       _result = _dateChoisie.toString().substring(0, 10);
+    } else {
+      _result = DateTime.now().toString();
     }
     return (_result);
+  }
+
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    TextEditingController _textFieldController = TextEditingController();
+
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Filtrer'),
+            content: TextField(
+              onChanged: (value) {
+                setState(() {
+                  _searchText = value;
+                });
+              },
+              controller: _textFieldController,
+              decoration: const InputDecoration(hintText: "Entrez un texte"),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Annuler'),
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+            ],
+          );
+        });
   }
 }
