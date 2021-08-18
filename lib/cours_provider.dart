@@ -13,9 +13,15 @@ class CoursProvider with ChangeNotifier {
 
   List<dynamic> get lesCours => _lesCours;
 
-  void chargerCoursDuJour(String jour, int _currentPage) async {
+  void chargerCoursDuJour(
+      String jour, int _currentPage, String searchText) async {
     if (jour != '') {
-      String url = _host + _query + jour + '&page=' + _currentPage.toString();
+      String url = _host +
+          _query +
+          jour +
+          '&page=' +
+          _currentPage.toString() +
+          (searchText != '' ? '&search=' + searchText : '');
       final Uri uri = Uri.parse(url);
 
       _lesCours = json.decode(await http.read(uri));
