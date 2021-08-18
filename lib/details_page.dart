@@ -28,7 +28,7 @@ class DetailsPage extends StatelessWidget {
                     border: TableBorder.all(
                       color: HexColor.fromHex(item["formation_color_json_v2"]),
                     ),
-                    columnWidths: const {0: FractionColumnWidth(.2)},
+                    columnWidths: const {0: FractionColumnWidth(.25)},
                     children: [
                       TableRow(children: [
                         const Padding(
@@ -109,8 +109,7 @@ class DetailsPage extends StatelessWidget {
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text("un certain nombre",
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          child: Text("un certain nombre"),
                         )
                       ]),
                     ],
