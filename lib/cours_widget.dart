@@ -7,12 +7,9 @@ class CoursWidget extends StatelessWidget {
   const CoursWidget({
     Key? key,
     required this.item,
-    required matiereJson,
-  })  : _matiereJson = matiereJson,
-        super(key: key);
+  }) : super(key: key);
 
   final Map<String, dynamic> item;
-  final String _matiereJson;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +64,7 @@ class CoursWidget extends StatelessWidget {
                         style: const TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   Text(item["intervenant_json"]),
-                  Text(_matiereJson,
+                  Text(item["matiere_json"] ?? '',
                       style: const TextStyle(
                           fontWeight: FontWeight.w300,
                           fontStyle: FontStyle.italic)),
