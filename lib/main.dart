@@ -84,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 setState(() {
                   _planningLoaded = false;
+                  _scrollController.jumpTo(0.0);
                 });
                 _selectionDate(context).then((value) {
                   setState(() {
@@ -98,13 +99,15 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             IconButton(
-              icon: const Icon(Icons.search),
-              tooltip: 'Filtrer',
-              onPressed: () => _displayTextInputDialog(context).then((value) {
-                _coursProvider.chargerCoursDuJour(
-                    _currentDate, _currentPage, _searchText);
-              }),
-            )
+                icon: const Icon(Icons.search),
+                tooltip: 'Filtrer',
+                onPressed: () {
+                  _scrollController.jumpTo(0.0);
+                  _displayTextInputDialog(context).then((value) {
+                    _coursProvider.chargerCoursDuJour(
+                        _currentDate, _currentPage, _searchText);
+                  });
+                })
           ],
         ),
         body: _planningLoaded
@@ -137,6 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           "Afficher plus de cours...",
                                           style: TextStyle(fontSize: 20)),
                                       onPressed: () {
+                                        _scrollController.jumpTo(0.0);
                                         setState(() {
                                           _currentPage++;
                                           _coursProvider.chargerCoursDuJour(
@@ -144,9 +148,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                               _currentPage,
                                               _searchText);
                                         });
-                                        _scrollController.jumpTo(
-                                            _scrollController
-                                                .position.minScrollExtent);
                                       },
                                     )
                                   : Container();
