@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Cours >= ' +
+          title: Text('>= ' +
               formatCurrentDateToFrench(_currentDate) +
               ' ' +
               (_searchText != "" ? '($_searchText)' : '')),
