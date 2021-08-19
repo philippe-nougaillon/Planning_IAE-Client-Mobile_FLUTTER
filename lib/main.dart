@@ -73,7 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Planning >= ' + formatCurrentDateToFrench(_currentDate)),
+          title: Text('Cours >= ' +
+              formatCurrentDateToFrench(_currentDate) +
+              ' ' +
+              (_searchText != "" ? '($_searchText)' : '')),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.calendar_today_outlined),
@@ -128,21 +131,25 @@ class _MyHomePageState extends State<MyHomePage> {
                           // , sinon afficher le bouton pour en voir plus
                           return (item.isNotEmpty)
                               ? CoursWidget(item: item)
-                              : TextButton(
-                                  child: const Text("Afficher plus de cours...",
-                                      style: TextStyle(fontSize: 20)),
-                                  onPressed: () {
-                                    setState(() {
-                                      _currentPage++;
-                                      _coursProvider.chargerCoursDuJour(
-                                          _currentDate,
-                                          _currentPage,
-                                          _searchText);
-                                    });
-                                    _scrollController.jumpTo(_scrollController
-                                        .position.minScrollExtent);
-                                  },
-                                );
+                              : _searchText == ""
+                                  ? TextButton(
+                                      child: const Text(
+                                          "Afficher plus de cours...",
+                                          style: TextStyle(fontSize: 20)),
+                                      onPressed: () {
+                                        setState(() {
+                                          _currentPage++;
+                                          _coursProvider.chargerCoursDuJour(
+                                              _currentDate,
+                                              _currentPage,
+                                              _searchText);
+                                        });
+                                        _scrollController.jumpTo(
+                                            _scrollController
+                                                .position.minScrollExtent);
+                                      },
+                                    )
+                                  : Container();
                         }),
               )
             : const Center(child: CircularProgressIndicator(value: null)),
@@ -198,6 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Text('Annuler'),
                 onPressed: () {
                   setState(() {
+                    _searchText = "";
                     Navigator.pop(context);
                   });
                 },
