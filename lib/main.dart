@@ -63,9 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
     ScrollController _scrollController = ScrollController();
 
     if (!_planningLoaded) {
-      _coursProvider.chargerCoursDuJour(
-          _currentDate, _currentPage, _searchText);
       setState(() {
+        _coursProvider.chargerCoursDuJour(
+            _currentDate, _currentPage, _searchText);
         _planningLoaded = true;
       });
     }
@@ -119,25 +119,28 @@ class _MyHomePageState extends State<MyHomePage> {
                               color: Colors.grey,
                             ),
                         controller: _scrollController,
-                        itemCount: _coursProvider.lesCours.length,
+                        itemCount: _coursProvider.lesCours.length + 1,
                         itemBuilder: (context, index) {
-                          final Map<String, dynamic> item =
-                              _coursProvider.lesCours[index];
-                          final _matiereJson = item["matiere_json"] ?? '';
-                          return ((index + 1) < _coursProvider.lesCours.length)
+                          Map<String, dynamic> item = <String, dynamic>{};
+                          if (index < _coursProvider.lesCours.length) {
+                            item = _coursProvider.lesCours[index];
+                          }
+
+                          return (item.isNotEmpty)
                               ? CoursWidget(
-                                  item: item, matiereJson: _matiereJson)
+                                  item: item,
+                                  matiereJson: item["matiere_json"] ?? '')
                               : TextButton(
                                   child: const Text("Afficher plus de cours...",
                                       style: TextStyle(fontSize: 20)),
                                   onPressed: () {
                                     setState(() {
                                       _currentPage++;
+                                      _coursProvider.chargerCoursDuJour(
+                                          _currentDate,
+                                          _currentPage,
+                                          _searchText);
                                     });
-                                    _coursProvider.chargerCoursDuJour(
-                                        _currentDate,
-                                        _currentPage,
-                                        _searchText);
                                     _scrollController.jumpTo(_scrollController
                                         .position.minScrollExtent);
                                   },
