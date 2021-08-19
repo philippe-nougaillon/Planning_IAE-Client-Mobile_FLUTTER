@@ -73,8 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Planning à partir du ' +
-              formatCurrentDateToFrench(_currentDate)),
+          title: Text('Planning >= ' + formatCurrentDateToFrench(_currentDate)),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.calendar_today_outlined),
@@ -88,21 +87,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     _currentDate = value;
                     _currentPage = 1;
                     _searchText = "";
-                  });
-                  _coursProvider.chargerCoursDuJour(
-                      value, _currentPage, _searchText);
-                  setState(() {
+                    _coursProvider.chargerCoursDuJour(
+                        value, _currentPage, _searchText);
                     _planningLoaded = true;
                   });
                 });
               },
             ),
             IconButton(
-                onPressed: () => _displayTextInputDialog(context).then((value) {
-                      _coursProvider.chargerCoursDuJour(
-                          _currentDate, _currentPage, _searchText);
-                    }),
-                icon: const Icon(Icons.search))
+              icon: const Icon(Icons.search),
+              tooltip: 'Filtrer',
+              onPressed: () => _displayTextInputDialog(context).then((value) {
+                _coursProvider.chargerCoursDuJour(
+                    _currentDate, _currentPage, _searchText);
+              }),
+            )
           ],
         ),
         body: _planningLoaded
@@ -122,14 +121,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         itemCount: _coursProvider.lesCours.length + 1,
                         itemBuilder: (context, index) {
                           Map<String, dynamic> item = <String, dynamic>{};
+                          // Tester si il y a encore des items à afficher
                           if (index < _coursProvider.lesCours.length) {
                             item = _coursProvider.lesCours[index];
                           }
-
+                          // , sinon afficher le bouton pour en voir plus
                           return (item.isNotEmpty)
-                              ? CoursWidget(
-                                  item: item,
-                                  matiereJson: item["matiere_json"] ?? '')
+                              ? CoursWidget(item: item)
                               : TextButton(
                                   child: const Text("Afficher plus de cours...",
                                       style: TextStyle(fontSize: 20)),
