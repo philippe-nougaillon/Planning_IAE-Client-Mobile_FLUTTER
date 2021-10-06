@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'hexcolor.dart';
 import 'details_page.dart';
