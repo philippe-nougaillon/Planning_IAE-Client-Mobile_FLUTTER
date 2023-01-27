@@ -59,12 +59,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _coursProvider = Provider.of<CoursProvider>(context);
-    ScrollController _scrollController = ScrollController();
+    final coursProvider = Provider.of<CoursProvider>(context);
+    ScrollController scrollController = ScrollController();
 
     if (!_planningLoaded) {
       setState(() {
-        _coursProvider.chargerCoursDuJour(
+        coursProvider.chargerCoursDuJour(
             _currentDate, _currentPage, _searchText);
         _planningLoaded = true;
       });
@@ -84,14 +84,14 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 setState(() {
                   _planningLoaded = false;
-                  _scrollController.jumpTo(0.0);
+                  scrollController.jumpTo(0.0);
                 });
                 _selectionDate(context).then((value) {
                   setState(() {
                     _currentDate = value;
                     _currentPage = 1;
                     _searchText = "";
-                    _coursProvider.chargerCoursDuJour(
+                    coursProvider.chargerCoursDuJour(
                         value, _currentPage, _searchText);
                     _planningLoaded = true;
                   });
@@ -102,9 +102,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: const Icon(Icons.search),
                 tooltip: 'Filtrer',
                 onPressed: () {
-                  _scrollController.jumpTo(0.0);
+                  scrollController.jumpTo(0.0);
                   _displayTextInputDialog(context).then((value) {
-                    _coursProvider.chargerCoursDuJour(
+                    coursProvider.chargerCoursDuJour(
                         _currentDate, _currentPage, _searchText);
                   });
                 })
@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: _planningLoaded
             ? Container(
-                child: _coursProvider.lesCours.isEmpty
+                child: coursProvider.lesCours.isEmpty
                     ? const Center(
                         child: Text(
                           "Rien à afficher pour la date choisie...",
@@ -123,13 +123,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         separatorBuilder: (context, index) => const Divider(
                               color: Colors.grey,
                             ),
-                        controller: _scrollController,
-                        itemCount: _coursProvider.lesCours.length + 1,
+                        controller: scrollController,
+                        itemCount: coursProvider.lesCours.length + 1,
                         itemBuilder: (context, index) {
                           Map<String, dynamic> item = <String, dynamic>{};
                           // Tester si il y a encore des items à afficher
-                          if (index < _coursProvider.lesCours.length) {
-                            item = _coursProvider.lesCours[index];
+                          if (index < coursProvider.lesCours.length) {
+                            item = coursProvider.lesCours[index];
                           }
                           // , sinon afficher le bouton pour en voir plus
                           return (item.isNotEmpty)
@@ -140,10 +140,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                           "Afficher plus de cours...",
                                           style: TextStyle(fontSize: 20)),
                                       onPressed: () {
-                                        _scrollController.jumpTo(0.0);
+                                        scrollController.jumpTo(0.0);
                                         setState(() {
                                           _currentPage++;
-                                          _coursProvider.chargerCoursDuJour(
+                                          coursProvider.chargerCoursDuJour(
                                               _currentDate,
                                               _currentPage,
                                               _searchText);
@@ -159,33 +159,33 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // Formater la date à la française // 23/08/2021
-  String formatCurrentDateToFrench(String _date) {
-    String _dateFormatFR = "";
-    if (_date != "") {
-      _dateFormatFR = DateFormat('dd/MM/yyyy').format(DateTime.parse(_date));
+  String formatCurrentDateToFrench(String date) {
+    String dateFormatFR = "";
+    if (date != "") {
+      dateFormatFR = DateFormat('dd/MM/yyyy').format(DateTime.parse(date));
     }
-    return _dateFormatFR;
+    return dateFormatFR;
   }
 
   Future<String> _selectionDate(BuildContext context) async {
-    String _result = '';
+    String result = '';
 
-    DateTime? _dateChoisie = await showDatePicker(
+    DateTime? dateChoisie = await showDatePicker(
         context: context,
         initialDate: DateTime.parse(_currentDate),
         firstDate: DateTime(2010),
         lastDate: DateTime(2030));
 
-    if (_dateChoisie != null) {
-      _result = _dateChoisie.toString().substring(0, 10);
+    if (dateChoisie != null) {
+      result = dateChoisie.toString().substring(0, 10);
     } else {
-      _result = DateTime.now().toString();
+      result = DateTime.now().toString();
     }
-    return (_result);
+    return (result);
   }
 
   Future<void> _displayTextInputDialog(BuildContext context) async {
-    TextEditingController _textFieldController = TextEditingController();
+    TextEditingController textFieldController = TextEditingController();
 
     return showDialog(
         context: context,
@@ -198,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   _searchText = value;
                 });
               },
-              controller: _textFieldController,
+              controller: textFieldController,
               decoration: const InputDecoration(hintText: "Entrez un texte"),
             ),
             actions: <Widget>[

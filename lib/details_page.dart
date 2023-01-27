@@ -8,8 +8,8 @@ class DetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _matiereJson = item["matiere_json"] ?? '';
-    final _salle = item["salle_json_v2"];
+    final matiereJson = item["matiere_json"] ?? '';
+    final salle = item["salle_json_v2"];
 
     return Scaffold(
       appBar: AppBar(
@@ -82,7 +82,7 @@ class DetailsPage extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(_matiereJson,
+                          child: Text(matiereJson,
                               style: const TextStyle(
                                   fontWeight: FontWeight.w300,
                                   fontStyle: FontStyle.italic)),
@@ -95,7 +95,7 @@ class DetailsPage extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(_salle,
+                          child: Text(salle,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold)),
                         )
@@ -114,8 +114,8 @@ class DetailsPage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  child: _salleAvecPlan(_salle)
-                      ? Image(image: AssetImage(nomDuPlanAvecSalle(_salle)))
+                  child: _salleAvecPlan(salle)
+                      ? Image(image: AssetImage(nomDuPlanAvecSalle(salle)))
                       : Container(),
                 ),
                 Container(
@@ -132,12 +132,12 @@ class DetailsPage extends StatelessWidget {
   }
 }
 
-String nomDuPlanAvecSalle(String _salle) {
-  return 'assets/images/Plan_' + _salle + '.jpg';
+String nomDuPlanAvecSalle(String salle) {
+  return 'assets/images/Plan_' + salle + '.jpg';
 }
 
-bool _salleAvecPlan(String _salle) {
-  List<String> _plan = ['B1', 'B2', 'B3'];
+bool _salleAvecPlan(String salle) {
+  List<String> plan = ['B1', 'B2', 'B3'];
 
-  return (_plan.contains(_salle));
+  return (plan.contains(salle));
 }
