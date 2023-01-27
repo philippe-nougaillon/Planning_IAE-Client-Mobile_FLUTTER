@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'hexcolor.dart';
 import 'details_page.dart';
@@ -49,6 +48,7 @@ class CoursWidget extends StatelessWidget {
                               item["salle_json_v2"] ?? '',
                               style: TextStyle(
                                 fontSize: 16,
+                                fontWeight: FontWeight.bold,
                                 foreground: Paint()
                                   ..style = PaintingStyle.stroke
                                   ..strokeWidth = 1
