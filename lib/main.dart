@@ -73,10 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('>= ' +
-              formatCurrentDateToFrench(_currentDate) +
-              ' ' +
-              (_searchText != "" ? '($_searchText)' : '')),
+          title: Text(
+              '>= ${formatCurrentDateToFrench(_currentDate)} ${_searchText != "" ? '($_searchText)' : ''}'),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.calendar_today_outlined),

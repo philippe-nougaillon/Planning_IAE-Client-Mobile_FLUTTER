@@ -18,7 +18,7 @@ class CoursProvider with ChangeNotifier {
       String jour, int currentPage, String searchText) async {
     if (jour != '') {
       String url =
-          '$_host$_query$jour&page=$currentPage${searchText != '' ? '&search=' + searchText : ''}';
+          '$_host$_query$jour&page=$currentPage${searchText != '' ? '&search=$searchText' : ''}';
       final Uri uri = Uri.parse(url);
 
       _lesCours = json.decode(await http.read(uri));

@@ -133,7 +133,7 @@ class DetailsPage extends StatelessWidget {
 }
 
 String nomDuPlanAvecSalle(String salle) {
-  return 'assets/images/Plan_' + salle + '.jpg';
+  return 'assets/images/Plan_$salle.jpg';
 }
 
 bool _salleAvecPlan(String salle) {
